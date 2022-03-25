@@ -1,0 +1,34 @@
+@import './colors';
+@import './overrides';
+
+
+body {
+  background-color: $primary;
+}
+
+html, body, #root, .App {
+  height: 100%;
+  overflow: hidden;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  //- Text CSS
+  text-align: center;
+  color: $white;
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: 1440px;
+    .header-title {
+      max-width: 16rem;
+      padding: 0 2rem;
+    }
+  }
+}
