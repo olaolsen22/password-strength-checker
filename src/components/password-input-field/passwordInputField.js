@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './passwordInputField.scss'
+import { useSelector, useDispatch } from 'react-redux';
+import { updatePassword } from '../../redux/actions';
 
 //- Icons
 import { faEye } from '@fortawesome/free-solid-svg-icons'
@@ -9,7 +11,10 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 function PasswordInputField() {
   const [hide, setHide] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
-  const [password, setPassword] = useState('')
+
+  const password = useSelector(state => state.password)
+
+  const dispatch = useDispatch()
   
   const hidePassword = () => {
     setHide(!hide)
@@ -19,8 +24,8 @@ function PasswordInputField() {
     setIsFocused(isFocused)
   }
 
-  const changePassword = (e) => {
-    setPassword(e.target.value)
+  const setPassword = (e) => {
+    dispatch(updatePassword(e.target.value))
   }
 
   return (
@@ -33,7 +38,7 @@ function PasswordInputField() {
         <input 
           className={`password-input-field ${hide ? 'hide' : ''}`}
           placeholder='Type a password'
-          onChange={(e) => changePassword(e)}
+          onChange={(e) => setPassword(e)}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
         />
