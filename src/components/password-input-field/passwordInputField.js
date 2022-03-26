@@ -29,7 +29,7 @@ function PasswordInputField() {
       data-testid='passwordInputField'
     >
       <div className='password-input-field-group'>
-        <div className={`password-input-field-outline ${isFocused ? 'show' : ''}`}/>
+        <div className={`password-input-field-outline ${isFocused ? 'show' : 'hide'}`}/>
         <input 
           className={`password-input-field ${hide ? 'hide' : ''}`}
           placeholder='Type a password'
@@ -41,6 +41,7 @@ function PasswordInputField() {
           className={`toggle-hide-button  ${password.length > 0 ? 'is-visible' : ''}`}
           onClick={() => hidePassword()}
         >
+          <p className='icon-description disable-text-select'>{hide ? 'show' : 'hide'}</p>
           <div className='hide-button-icon-container'>
             <FontAwesomeIcon icon={faEye} />
             <div className={`icon-slash ${!hide ? 'show' : ''}`}>
