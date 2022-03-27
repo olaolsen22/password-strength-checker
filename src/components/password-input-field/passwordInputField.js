@@ -31,7 +31,6 @@ function PasswordInputField(props) {
       className="password-input-field-container"
       data-testid='passwordInputField'
     >
-      <p data-testid='passwordTest'>{password}</p>
       <div className='password-input-field-group'>
         <div className={`password-input-field-outline ${isFocused ? 'show' : 'hide'}`}/>
         <input 
