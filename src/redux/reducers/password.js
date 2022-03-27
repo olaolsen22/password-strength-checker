@@ -1,6 +1,6 @@
 const passwordReducer = (state = '', action) => {
     switch(action.type) {
-        case 'UPDATE': 
+        case 'UPDATE_PASSWORD': 
             return action.payload
         default:
             return state = ''

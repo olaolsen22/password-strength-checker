@@ -1,20 +1,18 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './passwordInputField.scss'
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { updatePassword } from '../../redux/actions';
 
 //- Icons
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 
-function PasswordInputField() {
+function PasswordInputField(props) {
   const [hide, setHide] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
 
-  const password = useSelector(state => state.password)
-
-  const dispatch = useDispatch()
+  const password = props.password
   
   const hidePassword = () => {
     setHide(!hide)
@@ -25,7 +23,7 @@ function PasswordInputField() {
   }
 
   const setPassword = (e) => {
-    dispatch(updatePassword(e.target.value))
+    props.updatePassword(e.target.value)
   }
 
   return (
@@ -33,6 +31,7 @@ function PasswordInputField() {
       className="password-input-field-container"
       data-testid='passwordInputField'
     >
+      <p data-testid='passwordTest'>{password}</p>
       <div className='password-input-field-group'>
         <div className={`password-input-field-outline ${isFocused ? 'show' : 'hide'}`}/>
         <input 
@@ -41,10 +40,12 @@ function PasswordInputField() {
           onChange={(e) => setPassword(e)}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
+          data-testid='passwordInputFieldInput'
         />
         <a 
           className={`toggle-hide-button  ${password.length > 0 ? 'is-visible' : ''}`}
           onClick={() => hidePassword()}
+          data-testid='passwordInputFieldEyeIcon'
         >
           <p className='icon-description disable-text-select'>{hide ? 'show' : 'hide'}</p>
           <div className='hide-button-icon-container'>
@@ -59,4 +60,10 @@ function PasswordInputField() {
   );
 }
 
-export default PasswordInputField;
+const mapStateToProps = state => ({
+  password: state.password  
+})
+
+export default connect(mapStateToProps, {
+  updatePassword
+})(PasswordInputField)
