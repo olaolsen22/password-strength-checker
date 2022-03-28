@@ -11,7 +11,6 @@ function PasswordStrengthMeter(props) {
   const passwordStrength = props.passwordStrength
 
   const getPillColor = () => {
-    console.log('passsStrength', props)
     switch (passwordStrength) {
       case(0) :
         return 'red'
