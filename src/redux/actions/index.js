@@ -4,3 +4,10 @@ export const updatePassword = (value) => {
         payload: value
     }
 }
+
+export const updatePasswordStrength = (value) => {
+    return {
+        type: 'UPDATE_PASSWORD_STRENGTH',
+        payload: value
+    }
+}

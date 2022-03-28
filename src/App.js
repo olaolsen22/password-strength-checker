@@ -2,6 +2,7 @@ import './assets/style/App.scss'
 
 //- Components
 import PasswordInputField from './components/password-input-field/passwordInputField'
+import PasswordStrengthMeter from './components/password-strength-meter/passwordStrengthMeter'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <div className='container'>
           <h1 className="header-title" data-testid='appHeaderTitle'>Is your password strong enough?</h1>
           <PasswordInputField/>
+          <PasswordStrengthMeter />
         </div>
     </div>
   );
