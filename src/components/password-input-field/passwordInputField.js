@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './passwordInputField.scss'
 import { connect } from 'react-redux';
-import { updatePassword, updatePasswordStrengthDetails } from '../../redux/actions';
+import { updateIsAPILoading, updatePasswordStrengthDetails } from '../../redux/actions';
 import debounce from 'lodash.debounce'
 
 //- Icons
@@ -22,13 +22,22 @@ function PasswordInputField(props) {
     setIsFocused(isFocused)
   }
 
-  const onChangeHandler = useCallback(debounce(e => {
+  const onChangeHandler = (e) => {
     const value = e.target.value
     setPassword(value)
+    if (value.length > 0) {
+      getPasswordDetailsHandler(value)
+    } else {
+      props.updateIsAPILoading(false)
+    }
+  }
+
+  const getPasswordDetailsHandler = useCallback(debounce(value => {
     getPasswordDetails(value)
   }, 1000), [])
 
   async function getPasswordDetails (value) {
+    props.updateIsAPILoading(true)
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -41,6 +50,7 @@ function PasswordInputField(props) {
             props.updatePasswordStrengthDetails(data)
           })
           .catch((err) => console.log('ERROR :: ', err))
+          props.updateIsAPILoading(false)
       })
   }
 
@@ -54,7 +64,7 @@ function PasswordInputField(props) {
         <input 
           className={`password-input-field ${hide ? 'hide' : ''}`}
           placeholder='Type a password'
-          onChange={(e) => onChangeHandler(e)}
+          onChange={(e) => {onChangeHandler(e);}}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           data-testid='passwordInputFieldInput'
@@ -77,7 +87,7 @@ function PasswordInputField(props) {
   );
 }
 
-
 export default connect(null, {
+  updateIsAPILoading,
   updatePasswordStrengthDetails
 })(PasswordInputField)

@@ -1,6 +1,6 @@
-export const updatePassword = (value) => {
+export const updateIsAPILoading = (value) => {
     return {
-        type: 'UPDATE_PASSWORD',
+        type: 'UPDATE_IS_API_LOADING',
         payload: value
     }
 }
