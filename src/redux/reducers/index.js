@@ -1,11 +1,11 @@
 import passwordReducer from "./password";
-import passwordStrengthReducer from "./password-strength";
+import passwordStrengthReducerDetails from "./password-strength-details";
 
 import { combineReducers } from 'redux';
 
 const allReducers = combineReducers({
     password: passwordReducer,
-    passwordStrength: passwordStrengthReducer
+    passwordStrengthDetails: passwordStrengthReducerDetails
 })
 
 export default allReducers
