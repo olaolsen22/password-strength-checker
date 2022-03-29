@@ -5,9 +5,9 @@ export const updatePassword = (value) => {
     }
 }
 
-export const updatePasswordStrength = (value) => {
+export const updatePasswordStrengthDetails = (value) => {
     return {
-        type: 'UPDATE_PASSWORD_STRENGTH',
+        type: 'UPDATE_PASSWORD_STRENGTH_DETAILS',
         payload: value
     }
 }

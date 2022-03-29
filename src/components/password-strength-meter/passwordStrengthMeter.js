@@ -8,7 +8,7 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 function PasswordStrengthMeter(props) {
 
-  const passwordStrength = props.passwordStrength
+  const passwordStrength = props.passwordStrengthScore
 
   const getPillColor = () => {
     switch (passwordStrength) {
@@ -67,7 +67,7 @@ function PasswordStrengthMeter(props) {
 }
 
 const mapStateToProps = state => ({
-  passwordStrength: state.passwordStrength
+  passwordStrengthScore: state.passwordStrengthDetails.score
 })
 
 export default connect(mapStateToProps, {
