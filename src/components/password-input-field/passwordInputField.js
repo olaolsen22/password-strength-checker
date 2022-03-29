@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './passwordInputField.scss'
 import { connect } from 'react-redux';
-import { updatePassword } from '../../redux/actions';
+import { updatePassword, updatePasswordStrengthDetails } from '../../redux/actions';
+import debounce from 'lodash.debounce'
 
 //- Icons
 import { faEye } from '@fortawesome/free-solid-svg-icons'
@@ -11,8 +12,7 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 function PasswordInputField(props) {
   const [hide, setHide] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
-
-  const password = props.password
+  const [password, setPassword] = useState('')
   
   const hidePassword = () => {
     setHide(!hide)
@@ -22,8 +22,26 @@ function PasswordInputField(props) {
     setIsFocused(isFocused)
   }
 
-  const setPassword = (e) => {
-    props.updatePassword(e.target.value)
+  const onChangeHandler = useCallback(debounce(e => {
+    const value = e.target.value
+    setPassword(value)
+    getPasswordDetails(value)
+  }, 1000), [])
+
+  async function getPasswordDetails (value) {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: value })
+    };
+    await fetch('https://o9etf82346.execute-api.us-east-1.amazonaws.com/staging/password/strength', requestOptions)
+      .then((serverPromise) => {
+        serverPromise.json()
+          .then((data) => {
+            props.updatePasswordStrengthDetails(data)
+          })
+          .catch((err) => console.log('ERROR :: ', err))
+      })
   }
 
   return (
@@ -36,7 +54,7 @@ function PasswordInputField(props) {
         <input 
           className={`password-input-field ${hide ? 'hide' : ''}`}
           placeholder='Type a password'
-          onChange={(e) => setPassword(e)}
+          onChange={(e) => onChangeHandler(e)}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           data-testid='passwordInputFieldInput'
@@ -59,10 +77,7 @@ function PasswordInputField(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  password: state.password  
-})
 
-export default connect(mapStateToProps, {
-  updatePassword
+export default connect(null, {
+  updatePasswordStrengthDetails
 })(PasswordInputField)
