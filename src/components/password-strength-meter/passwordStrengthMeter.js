@@ -1,9 +1,5 @@
-import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './passwordStrengthMeter.scss'
 import { connect } from 'react-redux';
-//- Icons
-import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 
 function PasswordStrengthMeter(props) {

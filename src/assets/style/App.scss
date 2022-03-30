@@ -1,6 +1,7 @@
 @import './colors';
 @import './helpers';
 @import './overrides';
+@import './variables';
 
 
 body {
@@ -13,6 +14,7 @@ html, body, #root, .App {
 }
 
 .App {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,15 +24,38 @@ html, body, #root, .App {
   color: $white;
   .container {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
     width: 100%;
-    height: 100%;
     max-width: 512px;
+    transition: 5s all;
+    padding: 2rem;
+    height: 250px;
+    transition: height .5s linear;
+    &.expand {
+      height: 450px;
+    }
     .header-title {
       max-width: 16rem;
       padding: 0 2rem;
     }
   }
+}
+
+.loader {
+  opacity: 0;
+  border: 16px solid $white;
+  border-top: 16px solid $secondary;
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+  animation: spin 1s ease-in-out infinite;
+  transition: opacity .5s linear;
+  &.show { opacity: 1; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

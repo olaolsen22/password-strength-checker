@@ -1,4 +1,4 @@
-const passwordStrengthReducer = (state = {}, action) => {
+const passwordStrengthDetailsReducer = (state = {}, action) => {
     switch(action.type) {
         case 'UPDATE_PASSWORD_STRENGTH_DETAILS': 
             return action.payload
@@ -13,4 +13,4 @@ const passwordStrengthReducer = (state = {}, action) => {
     }
 }
 
-export default passwordStrengthReducer;
+export default passwordStrengthDetailsReducer;
