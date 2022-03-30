@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './passwordInputField.scss'
 import { connect } from 'react-redux';
@@ -25,9 +25,10 @@ function PasswordInputField(props) {
   const onChangeHandler = (e) => {
     const value = e.target.value
     setPassword(value)
-    if (value.length > 0) {
+    if (value.length > 1) {
       getPasswordDetailsHandler(value)
     } else {
+      props.updatePasswordStrengthDetails({})
       props.updateIsAPILoading(false)
     }
   }
